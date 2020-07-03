@@ -17,7 +17,7 @@ from caller import single_image_converter
 
 #----------------------------------------------------------------------------
 
-def generate_images(network_pkl, seeds, truncation_psi, mode):
+def generate_images(network_pkl, seeds, truncation_psi, mode, color):
     print('Loading networks from "%s"...' % network_pkl)
     _G, _D, Gs = pretrained_networks.load_networks(network_pkl)
     # noise_vars = [var for name, var in Gs.components.synthesis.vars.items() if name.startswith('noise')]
@@ -36,12 +36,14 @@ def generate_images(network_pkl, seeds, truncation_psi, mode):
         images_2D = Gs.run(z, None, **Gs_kwargs) # [minibatch, height, width, channel]
         PIL.Image.fromarray(images_2D[0], 'RGB').save(dnnlib.make_run_dir_path('2D_seed%04d.png' % seed))
         if mode != '2D':
-            images_3D = single_image_converter(images_2D[0], mode)
-            PIL.Image.fromarray(images_3D, 'RGB').save(dnnlib.make_run_dir_path('3D_seed%04d.png' % seed))
+            color_image3D, monochrome_image3D = single_image_converter(images_2D[0], mode, color)
+            PIL.Image.fromarray(color_image3D, 'RGB').save(dnnlib.make_run_dir_path('color_3D_seed%04d.png' % seed))
+            if mode != 'texture':
+                PIL.Image.fromarray(monochrome_image3D, 'RGB').save(dnnlib.make_run_dir_path('monochrome_3D_seed%04d.png' % seed))
 
 #----------------------------------------------------------------------------
 
-def truncation_trick(network_pkl, seeds, mode, interval=0.01):
+def truncation_trick(network_pkl, seeds, mode, color, interval=0.01):
     print('Loading networks from "%s"...' % network_pkl)
     _G, _D, Gs = pretrained_networks.load_networks(network_pkl)
     # noise_vars = [var for name, var in Gs.components.synthesis.vars.items() if name.startswith('noise')]
@@ -67,11 +69,13 @@ def truncation_trick(network_pkl, seeds, mode, interval=0.01):
             images_2D = Gs.run(z, None, **Gs_kwargs) # [minibatch, height, width, channel]
             PIL.Image.fromarray(images_2D[0], 'RGB').save(dnnlib.make_run_dir_path('2D_seed%04d_%+.03fpsi.png' % (seed, truncation_psi)))
             if mode != '2D':
-                images_3D = single_image_converter(images_2D[0], mode) # flatten, Hilbert, professor, Hilbert_and_professor
-                PIL.Image.fromarray(images_3D, 'RGB').save(dnnlib.make_run_dir_path('3D_seed%04d_%+.03fpsi.png' % (seed, truncation_psi)))
+                color_image3D, monochrome_image3D = single_image_converter(images_2D[0], mode, color)
+                PIL.Image.fromarray(color_image3D, 'RGB').save(dnnlib.make_run_dir_path('color_3D_seed%04d_%+.03fpsi.png' % (seed, truncation_psi)))
+                if mode != 'texture':
+                    PIL.Image.fromarray(monochrome_image3D, 'RGB').save(dnnlib.make_run_dir_path('monochrome_3D_seed%04d_%+.03fpsi.png' % (seed, truncation_psi)))
 
 #----------------------------------------------------------------------------
-def style_mixing_example(network_pkl, row_seeds, col_seeds, truncation_psi, col_styles, mode, minibatch_size=4):
+def style_mixing_example(network_pkl, row_seeds, col_seeds, truncation_psi, col_styles, mode, color, minibatch_size=4):
     print('Loading networks from "%s"...' % network_pkl)
     _G, _D, Gs = pretrained_networks.load_networks(network_pkl)
     w_avg = Gs.get_var('dlatent_avg') # [component]
@@ -101,16 +105,18 @@ def style_mixing_example(network_pkl, row_seeds, col_seeds, truncation_psi, col_
             image_dict[(row_seed, col_seed)] = image
 
     if mode != '2D':
-        image_dict_3D = image_dict.copy()
+        color_image_dict_3D = image_dict.copy()
+        monochrome_image_dict_3D = image_dict.copy()
         height_3D = 0
         width_3D = 0
         print('Conventing 3D images')
         for key, image_2D in image_dict.items():
-
-            image3D = single_image_converter(image_2D, mode) # flatten, Hilbert, professor, Hilbert_and_professor
-            image_dict_3D[key] = image3D
-            height_3D = image3D.shape[0]
-            width_3D = image3D.shape[1]
+            color_image3D, monochrome_image3D = single_image_converter(image_2D, mode, color) # flatten, Hilbert, professor, Hilbert_and_professor
+            color_image_dict_3D[key] = color_image3D
+            if mode != 'texture':
+                monochrome_image_dict_3D[key] = monochrome_image3D
+            height_3D = color_image3D.shape[0]
+            width_3D = color_image3D.shape[1]
 
     print('Saving images...')
     for (row_seed, col_seed), image in image_dict.items():
@@ -132,7 +138,7 @@ def style_mixing_example(network_pkl, row_seeds, col_seeds, truncation_psi, col_
     canvas.save(dnnlib.make_run_dir_path('grid_2D.png'))
     
     if mode != '2D':
-        print('Saving 3D image grid...')
+        print('Saving color 3D image grid...')
         H = height_3D
         W = width_3D
         canvas = PIL.Image.new('RGB', (W * (len(col_seeds) + 1), H * (len(row_seeds) + 1)), 'black')
@@ -145,8 +151,25 @@ def style_mixing_example(network_pkl, row_seeds, col_seeds, truncation_psi, col_
                     key = (col_seed, col_seed)
                 if col_seed is None:
                     key = (row_seed, row_seed)
-                canvas.paste(PIL.Image.fromarray(image_dict_3D[key], 'RGB'), (W * col_idx, H * row_idx))
-        canvas.save(dnnlib.make_run_dir_path('grid_3D.png'))
+                canvas.paste(PIL.Image.fromarray(color_image_dict_3D[key], 'RGB'), (W * col_idx, H * row_idx))
+        canvas.save(dnnlib.make_run_dir_path('color_grid_3D.png'))
+
+    if mode != 'texture':
+        print('Saving monochrome 3D image grid...')
+        H = height_3D
+        W = width_3D
+        canvas = PIL.Image.new('RGB', (W * (len(col_seeds) + 1), H * (len(row_seeds) + 1)), 'black')
+        for row_idx, row_seed in enumerate([None] + row_seeds):
+            for col_idx, col_seed in enumerate([None] + col_seeds):
+                if row_seed is None and col_seed is None:
+                    continue
+                key = (row_seed, col_seed)
+                if row_seed is None:
+                    key = (col_seed, col_seed)
+                if col_seed is None:
+                    key = (row_seed, row_seed)
+                canvas.paste(PIL.Image.fromarray(monochrome_image_dict_3D[key], 'RGB'), (W * col_idx, H * row_idx))
+        canvas.save(dnnlib.make_run_dir_path('monochrome_grid_3D.png'))
 
 #----------------------------------------------------------------------------
 
@@ -194,15 +217,17 @@ Run 'python %(prog)s <subcommand> --help' for subcommand help.''',
     parser_generate_images.add_argument('--network', help='Network pickle filename', dest='network_pkl', required=True)
     parser_generate_images.add_argument('--seeds', type=_parse_num_range, help='List of random seeds', required=True)
     parser_generate_images.add_argument('--truncation-psi', type=float, help='Truncation psi (default: %(default)s)', default=0.5)
-    parser_generate_images.add_argument('--mode', help='flatten, Hilbert, professor, Hilbert_and_professor', default='flatten', choices=['normal', 'Hilbert', '3-axis', 'Hilbert_with_3-axis', 'texture', '2D'])
+    parser_generate_images.add_argument('--mode', help='flatten, Hilbert, professor, Hilbert_and_professor', choices=['flatten','normal', 'Hilbert', '3-axis', 'Hilbert_with_3-axis', 'texture', '2D'])
     parser_generate_images.add_argument('--result-dir', help='Root directory for run results (default: %(default)s)', default='results', metavar='DIR')
+    parser_generate_images.add_argument('--color', type=bool, help='Does the generated images contain color?')
 
     parser_truncation_trick = subparsers.add_parser('truncation-trick', help='truncation trick')
     parser_truncation_trick.add_argument('--network', help='Network pickle filename', dest='network_pkl', required=True)
     parser_truncation_trick.add_argument('--seeds', type=_parse_num_range, help='List of random seeds', default=[0])
     parser_truncation_trick.add_argument('--interval', type=float, help='Interval of each truncation', default=0.01)
-    parser_truncation_trick.add_argument('--mode', help='flatten, Hilbert, professor, Hilbert_and_professor', default='flatten', choices=['normal', 'Hilbert', '3-axis', 'Hilbert_with_3-axis', 'texture', '2D'])
+    parser_truncation_trick.add_argument('--mode', help='flatten, Hilbert, professor, Hilbert_and_professor', choices=['flatten', 'normal', 'Hilbert', '3-axis', 'Hilbert_with_3-axis', 'texture', '2D'])
     parser_truncation_trick.add_argument('--result-dir', help='Root directory for run results (default: %(default)s)', default='results', metavar='DIR')
+    parser_truncation_trick.add_argument('--color', type=bool, help='Does the generated images contain color?')
 
     parser_style_mixing_example = subparsers.add_parser('style-mixing-example', help='Generate style mixing video')
     parser_style_mixing_example.add_argument('--network', help='Network pickle filename', dest='network_pkl', required=True)
@@ -210,8 +235,9 @@ Run 'python %(prog)s <subcommand> --help' for subcommand help.''',
     parser_style_mixing_example.add_argument('--col-seeds', type=_parse_num_range, help='Random seeds to use for image columns', required=True)
     parser_style_mixing_example.add_argument('--col-styles', type=_parse_num_range, help='Style layer range (default: %(default)s)', default='0-6')
     parser_style_mixing_example.add_argument('--truncation-psi', type=float, help='Truncation psi (default: %(default)s)', default=0.5)
-    parser_style_mixing_example.add_argument('--mode', help='flatten, Hilbert, professor, Hilbert_and_professor', default='flatten', choices=['normal', 'Hilbert', '3-axis', 'Hilbert_with_3-axis', 'texture', '2D'])
+    parser_style_mixing_example.add_argument('--mode', help='flatten, Hilbert, professor, Hilbert_and_professor', choices=['flatten', 'normal', 'Hilbert', '3-axis', 'Hilbert_with_3-axis', 'texture', '2D'])
     parser_style_mixing_example.add_argument('--result-dir', help='Root directory for run results (default: %(default)s)', default='results', metavar='DIR')
+    parser_style_mixing_example.add_argument('--color', type=bool, help='Does the generated images contain color?')
 
     args = parser.parse_args()
     kwargs = vars(args)

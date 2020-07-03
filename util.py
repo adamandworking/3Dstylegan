@@ -3,11 +3,6 @@ import numpy as np
 from pyface.api import GUI
 from mayavi import mlab
 from numba import jit
-# open image
-
-# save image in 2D
-
-# save image in 3D
 
 def png_to_numpy(png_path):
     png = PIL.Image.open(png_path)
@@ -63,14 +58,22 @@ def to_monochrome_image(boolean_table, space=64):
     return img_RGB
 
 @jit(nopython=True)
-def convert_3D_color(rgb_3Darray):
-    for x in range(64):
-        for y in range(64):
-            for z in range(64):
-                for idx, element in enumerate(rgb_3Darray[x][y][z]):
-                    if element > 127:
-                        rgb_3Darray[x][y][z][idx] = 127
-                    rgb_3Darray[x][y][z][idx] *= 2
+def convert_3D_color(rgb_3Darray, mode='normalization'):
+    if mode == 'normalization':
+        max_value = np.amax(rgb_3Darray)
+        for x in range(64):
+            for y in range(64):
+                for z in range(64):
+                    for idx, element in enumerate(rgb_3Darray[x][y][z]):
+                        rgb_3Darray[x][y][z][idx] = int(element / max_value  * 255)            
+
+    if mode == 'cut_to_128':
+        for x in range(64):
+            for y in range(64):
+                for z in range(64):
+                    for idx, element in enumerate(rgb_3Darray[x][y][z]):
+                        if element > 127:
+                            rgb_3Darray[x][y][z][idx] = 127
+                        rgb_3Darray[x][y][z][idx] *= 2
     return rgb_3Darray
-    
     

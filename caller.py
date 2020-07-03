@@ -1,6 +1,7 @@
 from util import to_color_3Dimage, to_monochrome_image, png_to_numpy
 from voxel_lib.slice_approach import slice_to_3D 
 from voxel_lib.texture_approach import minecraft_to_3D 
+from voxel_lib.flatten_approach import flatten_to_3D 
 import PIL.Image
 import glob
 import os
@@ -29,13 +30,18 @@ def minecraft_convert_2D_to_3D():
         image3D = PIL.Image.fromarray(image3D)
         image3D.save('OUTPUT/minecraft_' + basename)
 
-def single_image_converter(numpy_png, mode, color = True):
-    if mode in ['normal', 'Hilbert', '3-axis', 'Hilbert_with_3-axis']:
-        boolean_table, rgb_3Darray = slice_to_3D(mode, numpy_png, color)
-        result = to_color_3Dimage(boolean_table, rgb_3Darray)
+def single_image_converter(numpy_png, mode, color):
+    if mode in ['flatten','normal', 'Hilbert', '3-axis', 'Hilbert_with_3-axis']:
+        if mode in ['flatten']:
+            boolean_table, rgb_3Darray = flatten_to_3D(numpy_png, color)
+        if mode in ['normal', 'Hilbert', '3-axis', 'Hilbert_with_3-axis']:
+            boolean_table, rgb_3Darray = slice_to_3D(mode, numpy_png, color)
+        color_image3D = to_color_3Dimage(boolean_table, rgb_3Darray)
+        monochrome_image3D = to_monochrome_image(boolean_table)
     if mode in ['texture']:
-        result = minecraft_to_3D(numpy_png)
-    return result
+        color_image3D = minecraft_to_3D(numpy_png)
+        monochrome_image3D = None
+    return color_image3D, monochrome_image3D
 
 
 

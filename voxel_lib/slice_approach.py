@@ -34,7 +34,7 @@ def slice_to_3D(mode, png_array, color, axis = 'z'):
                             layer_num = (7 - i) * 8 + (7 - j)
                         if mode == 'Hilbert':
                             layer_num = 64 - Hilbert_mapping[i][j]
-                        if np.all(png_array[i * 64 + a][j * 64 + b] < cutoff):
+                        if np.any(png_array[i * 64 + a][j * 64 + b] < cutoff):
                             if axis == 'x':
                                 boolean_table[layer_num][a][b] = True
                                 rgb_3Darray[layer_num][a][b] = png_array[i * 64 + a][j * 64 + b]
