@@ -106,9 +106,11 @@ def style_mixing_example(network_pkl, row_seeds, col_seeds, truncation_psi, col_
         width_3D = 0
         print('Conventing 3D images')
         for key, image_2D in image_dict.items():
-            image_dict_3D[key] = single_image_converter(image_2D, mode) # flatten, Hilbert, professor, Hilbert_and_professor
-            height_3D = image_2D.shape[0]
-            width_3D = image_2D.shape[1]
+
+            image3D = single_image_converter(image_2D, mode) # flatten, Hilbert, professor, Hilbert_and_professor
+            image_dict_3D[key] = image3D
+            height_3D = image3D.shape[0]
+            width_3D = image3D.shape[1]
 
     print('Saving images...')
     for (row_seed, col_seed), image in image_dict.items():
@@ -131,8 +133,8 @@ def style_mixing_example(network_pkl, row_seeds, col_seeds, truncation_psi, col_
     
     if mode != '2D':
         print('Saving 3D image grid...')
-        W = height_3D
-        H = width_3D
+        H = height_3D
+        W = width_3D
         canvas = PIL.Image.new('RGB', (W * (len(col_seeds) + 1), H * (len(row_seeds) + 1)), 'black')
         for row_idx, row_seed in enumerate([None] + row_seeds):
             for col_idx, col_seed in enumerate([None] + col_seeds):

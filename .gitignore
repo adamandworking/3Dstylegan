@@ -1,7 +1,7 @@
 /.stylegan2-cache/
 __pycache__/
 
-resultS/
+results/
 INPUT/
 OUTPUT/
 pkl_folder/
