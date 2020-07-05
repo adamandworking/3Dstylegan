@@ -4,11 +4,27 @@
 
 <span style="color:blue">Jo add discription</span>
 
-|       Approach        | 2D images           | its 3D representation |
+## Flatten approach
+| 2D images           | its 3D representation |
+|:-------------------:| :--------------------:|
+| ![flatten 2D sample](./markdown_image/flatten_sample.png)|  ![flatten 3D sample](./markdown_image/3D_example.png)|
+
+
+## Texture approach
+| 2D images           | its 3D representation |
+|:-------------------:| :--------------------:|
+| ![minecraft 2D sample](./markdown_image/texture_2D_sample.png)| ![minecraft 3D sample](./markdown_image/texture_3D_sample.png)|
+
+## Slice approach
+|       Method          | 2D images           | its 3D representation |
 | :---------------------|:-------------------:| :--------------------:|
-| Flatten approach      | image               | image                 |
-| Texture approach      | image               | image                 |
-| Slice approach        | image               | image                 |
+| Normal                |![slice_normal_sample](./markdown_image/slice_normal_sample.png) | ![flatten 3D sample](./markdown_image/3D_example.png)|
+| Hilbert               |![slice_Hilbert_sample](./markdown_image/slice_Hilbert_sample.png) | ![flatten 3D sample](./markdown_image/3D_example.png)|
+| 3-axis                |![slice_3-axis_sample](./markdown_image/slice_3-axis_sample.png) |![flatten 3D sample](./markdown_image/3D_example.png) |
+| Hilbert_with_3-axis   |![slice_Hilbert_with_3-axis_sample](./markdown_image/slice_Hilbert_with_3-axis_sample.png) |![flatten 3D sample](./markdown_image/3D_example.png) |
+
+
+
 
 # Beginning
 Since StyleGAN requires all the input image must be square image and its length of side must be the power of 2 (1024, 512, 256, ...).  

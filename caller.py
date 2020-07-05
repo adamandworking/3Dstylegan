@@ -11,8 +11,7 @@ def slice_convert_2D_to_3D():
     for file in input_list:
         basename = os.path.basename(file)
         numpy_png = png_to_numpy(file)
-        # boolean_table, rgb_3Darray = slice_to_3D('normal', numpy_png, False)
-        boolean_table, rgb_3Darray = flatten_to_3D(numpy_png, False)
+        boolean_table, rgb_3Darray = slice_to_3D('normal', numpy_png, False)
 
         color_image3D = to_color_3Dimage(boolean_table, rgb_3Darray)
         color_image3D = PIL.Image.fromarray(color_image3D)
@@ -47,6 +46,6 @@ def single_image_converter(numpy_png, mode, color):
 
 
 if __name__ == '__main__':
-    slice_convert_2D_to_3D()
+    # slice_convert_2D_to_3D()
     # minecraft_convert_2D_to_3D()
     print('program end')

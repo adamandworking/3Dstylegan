@@ -8,7 +8,7 @@ def binvox_to_png(mode, axis = 'z'):
     input_list = glob.glob('INPUT/*.binvox')
     for file in input_list:
         filename = os.path.basename(file)
-        basename, extension = os.path.splitext(filename)
+        basename, _ = os.path.splitext(filename)
         mapping_Hilbert = np.array([
             [1 ,2 ,15,16,17,20,21,22],
             [4 ,3 ,14,13,18,19,24,23],
@@ -80,7 +80,7 @@ def binvox_to_png(mode, axis = 'z'):
         array_2D = np.uint8(array_2D)
         png = PIL.Image.fromarray(array_2D)
         print('saving ' + basename + '.png')
-        png.save('OUTPUT/' + basename + '.png')
+        png.save('OUTPUT/' + basename + '_' + mode + '.png')
 
 def raw_minecraft_to_dataset():
     input_list = glob.glob('INPUT/*.png')
@@ -108,6 +108,6 @@ def png_to_numpy(png_path):
     return png_numpy
 
 if __name__ == '__main__':
-    binvox_to_png('Hilbert_with_3-axis')
+    binvox_to_png('Hilbert_with_3-axis')  # mode: ['flatten','normal', 'Hilbert', '3-axis', 'Hilbert_with_3-axis']
     # raw_minecraft_to_dataset()
     
