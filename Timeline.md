@@ -38,7 +38,7 @@ In our approach, we set a cutoff for determining whether the voxel exists. For m
 This is how the input data created. 
 
 ## Result
-<span style="color:red">add result</span>
+<span style="color:red">Will be updated in the up comming version</span>
 
 The result is not satisfying. Only proved that a cuboid-like model can be learned by StyleGAN.
 
@@ -60,7 +60,7 @@ Since we want to increase the fault tolerance, single line or pixels presented a
 
 ## Result
 
-<span style="color:red">add result</span>
+<span style="color:red">Will be updated in the up comming version</span>
 
 Most of the results are satisfying. However some results need to be re-train several times to make it to be acceptable. We guess the network sometimes still rely on some random varibles, especially when the input dataset is mixed with different axis and color.
 
@@ -76,21 +76,35 @@ This time we would 512 * 512 image as our shape of input images becausae it help
 1. Flatten the 3D array (64, 64, 64, 3) -> (262144, 3)
 2. Reshape the array to be 2D image with size 512 * 512 (262144, 3) -> (512, 512, 3)
 
-## results (bookcase)
-<span style="color:red">add result</span>  
-<span style="color:blue">add discription</span>
+## results (bookcase) Variation: Shelfboard
+| 2D images           | its 3D representation |
+|:-------------------:| :--------------------:|
+|<img src="./markdown_image/bookcase_shelfboard_sample1.png" height="256"/>|<img src="./markdown_image/bookcase_shelfboard_sample1_3D.png" height="256"/>|
+|<img src="./markdown_image/bookcase_shelfboard_sample2.png" height="256"/>|<img src="./markdown_image/bookcase_shelfboard_sample2_3D.png" height="256"/>|
+|<img src="./markdown_image/bookcase_shelfboard_sample3.png" height="256"/>|<img src="./markdown_image/bookcase_shelfboard_sample3_3D.png" height="256"/>|
+|<img src="./markdown_image/bookcase_shelfboard_sample4.png" height="256"/>|<img src="./markdown_image/bookcase_shelfboard_sample4_3D.png" height="256"/>|
 
-## results (table)
-<span style="color:red">add result</span>  
-<span style="color:blue">add discription</span>  
+## results (table)  Variation: Style
+| 2D images           | its 3D representation |
+|:-------------------:| :--------------------:|
+|<img src="./markdown_image/flatten_table_sample1.png" height="256"/>|<img src="./markdown_image/flatten_table_sample1_3D.png" height="256"/>|
+|<img src="./markdown_image/flatten_table_sample2.png" height="256"/>|<img src="./markdown_image/flatten_table_sample2_3D.png" height="256"/>|
+|<img src="./markdown_image/flatten_table_sample3.png" height="256"/>|<img src="./markdown_image/flatten_table_sample3_3D.png" height="256"/>|
+|<img src="./markdown_image/flatten_table_sample4.png" height="256"/>|<img src="./markdown_image/flatten_table_sample4_3D.png" height="256"/>|
 
+As the result, the StyleGAN seems that it cannot recognize the shape of the table in flatten approach.
 On the other hand, we were developing texture approach meanwhile.
 # Texture approach
 In this approach, we choose texture as our input dataset. We choose Minecraft human texture as our input dataset since it is relatively low resolution and contains tons of resources on the internet thanks to the community.
 
 ## results 
-<span style="color:red">add result</span>  
-<span style="color:blue">add discription</span> 
+### generator
+![](./markdown_image/texture_sample.png)
+### style mixing
+| Coarse style           | Fine style |
+|:-------------------:| :--------------------:|
+|<img src="./markdown_image/texture_coarse.png"/>|<img src="./markdown_image/texture_fine.png"/>|
+
 
 # Slice approach
 As we want to take the advantages of powerful recognizing 2D images features ability in StyleGAN2. We choose to revise the representation of 3D model to be slice approach.
@@ -103,8 +117,12 @@ As we want to take the advantages of powerful recognizing 2D images features abi
 1. If those 2D images which converted from 3D models, they share more similiar area by slicing along one specific axis, then that axis would be more appropriate as our choice since this is good for the network to recognize our input dataset.
 
 ## results 
-<span style="color:red">add result</span>  
-<span style="color:blue">add discription</span>  
+| 2D images           | its 3D representation |
+|:-------------------:| :--------------------:|
+|<img src="./markdown_image/normal_sample1.png" height="256"/>|<img src="./markdown_image/normal_sample1_3D.png" height="256"/>|
+|<img src="./markdown_image/normal_sample2.png" height="256"/>|<img src="./markdown_image/normal_sample2_3D.png" height="256"/>|
+|<img src="./markdown_image/normal_sample3.png" height="256"/>|<img src="./markdown_image/normal_sample3_3D.png" height="256"/>|
+|<img src="./markdown_image/normal_sample4.png" height="256"/>|<img src="./markdown_image/normal_sample4_3D.png" height="256"/>|
 
 # Improvement of slice approach
 
@@ -128,8 +146,14 @@ At least in every 4 or 8 adjacent slice could be segmented as the same 8 x 8 or 
 3. Every slice size is (64, 64, 3) so there will be 8 slices in every row of the final image (512, 512, 3).
 
 ### results 
-<span style="color:red">add result</span>  
-<span style="color:blue">add discription</span>  
+| 2D images           | its 3D representation |
+|:-------------------:| :--------------------:|
+|<img src="./markdown_image/Hilbert_table1.png" height="256"/>|<img src="./markdown_image/Hilbert_table1_3D.png" height="256"/>|
+|<img src="./markdown_image/Hilbert_table2.png" height="256"/>|<img src="./markdown_image/Hilbert_table2_3D.png" height="256"/>|
+|<img src="./markdown_image/Hilbert_table3.png" height="256"/>|<img src="./markdown_image/Hilbert_table3_3D.png" height="256"/>|
+|<img src="./markdown_image/Hilbert_table4.png" height="256"/>|<img src="./markdown_image/Hilbert_table4_3D.png" height="256"/>|
+
+Suprisingly, the training time has reduced after using this approach and it is quite hard to prove that the style-mixing ability has been increased. We would try to measure this in the upcomming version.
 
 ## Slice approach with 3 dimension
 
@@ -138,8 +162,12 @@ At least in every 4 or 8 adjacent slice could be segmented as the same 8 x 8 or 
 3. In a (1024, 1024, 3) image, we can place 4 (512, 512, 3) images at 4 corners as the x one is placed at the top left corner, y is placed at the left bottom corner, z is placed at the top right corner and the last corner will be remained as blank white color.
 
 ### results 
-<span style="color:red">add result</span>   
-Suprisingly, the training time has reduced after using this approach and it is quite hard to prove that the style-mixing ability has been increased. We would try to measure this in the update version.
+| 2D images           | its 3D representation |
+|:-------------------:| :--------------------:|
+|<img src="./markdown_image/3-axis_sample1.png" height="256"/>|<img src="./markdown_image/3-axis_sample1_3D.png" height="256"/>|
+|<img src="./markdown_image/3-axis_sample2.png" height="256"/>|<img src="./markdown_image/3-axis_sample2_3D.png" height="256"/>|
+|<img src="./markdown_image/3-axis_sample3.png" height="256"/>|<img src="./markdown_image/3-axis_sample3_3D.png" height="256"/>|
+|<img src="./markdown_image/3-axis_sample4.png" height="256"/>|<img src="./markdown_image/3-axis_sample4_3D.png" height="256"/>|  
 
 # More results of slice approach with Hilbert's curve
 
@@ -148,10 +176,32 @@ Suprisingly, the training time has reduced after using this approach and it is q
 
 As the styleGAN cannot recognized the 3D model with different textures added, such as wooden or rock texture. We guess maybe there is not enough hidden layers that are responsible for finer details in 512 x 512 level. Therefore, we change the texture into simple striped texture with different colors.
 
-## table
-<span style="color:red">add result</span>  
-
 ## chair
-<span style="color:red">add result</span>  
+| 2D images           | its 3D representation |
+|:-------------------:| :--------------------:|
+|<img src="./markdown_image/Hilbert_chair1.png" height="256"/>|<img src="./markdown_image/Hilbert_chair1_3D.png" height="256"/>|
+|<img src="./markdown_image/Hilbert_chair2.png" height="256"/>|<img src="./markdown_image/Hilbert_chair2_3D.png" height="256"/>|
+|<img src="./markdown_image/Hilbert_chair3.png" height="256"/>|<img src="./markdown_image/Hilbert_chair3_3D.png" height="256"/>|
+|<img src="./markdown_image/Hilbert_chair4.png" height="256"/>|<img src="./markdown_image/Hilbert_chair4_3D.png" height="256"/>|
 
-<span style="color:blue">add discription</span> 
+# pkl file download
+(OneDrive link)[https://mycuhk-my.sharepoint.com/:u:/g/personal/1155095136_link_cuhk_edu_hk/ERLYZY_BhIlEmG2NLEVsjPcBHuVw6d5RB24b7U2ubozWpw?e=oc4pEr]
+
+# Example for How to use the program
+
+## For Generator:
+```bash
+python run_generator.py generate-images --network=pkl_folder/Normal_table.pkl --seeds=6600-6900 --truncation-psi=0.7 --mode=normal --color=False
+```
+## For truncation change:
+```bash
+python run_generator.py truncation-trick --network=pkl_folder/Hilbert_stripe.pkl --seeds=270 --interval=0.1 --mode=Hilbert --color=True
+```
+## For Style mixing:
+```bash
+python run_generator.py style-mixing-example --network=pkl_folder/Hilbert_stripe.pkl --row-seeds=270,147 --col-seeds=68,79,75 --truncation-psi=0.7 --col-styles=1,2,3,4 --mode=Hilbert --color=True
+```
+
+For more example, please read caller.py.  
+If you want to create you own dataset, you may use the code in this folder: "dataset_3D_maker"  
+Please feel free to let me know if you have encountered any problems via gmail(adamandworking@gmail.com). Enjoy!

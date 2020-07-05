@@ -24,7 +24,7 @@ def to_color_3Dimage(boolean_table, rgb_3Darray, space=64):
     currfig.module_manager.scalar_lut_manager.lut.number_of_colors = len(s)
     currfig.module_manager.scalar_lut_manager.lut.table = lut
 
-    mlab.view(azimuth=135, elevation=65, distance=140, focalpoint=(space/2, space/2, space/2))
+    mlab.view(azimuth=315, elevation=65, distance=140, focalpoint=(space/2, space/2, space/2))
     fig.scene.camera.parallel_projection = True
     fig.scene.camera.parallel_scale = 65  # smaller the number, greater zoom
     mlab.axes(figure=fig, nb_labels=5, extent=(0, space, 0, space, 0, space))
@@ -45,7 +45,7 @@ def to_monochrome_image(boolean_table, space=64):
                     color=(0, 1, 0),
                     mode="cube",
                     scale_factor=1)
-    mlab.view(azimuth=135, elevation=65, distance=140, focalpoint=(space/2, space/2, space/2))
+    mlab.view(azimuth=315, elevation=65, distance=140, focalpoint=(space/2, space/2, space/2))
     fig.scene.camera.parallel_projection = True
     fig.scene.camera.parallel_scale = 65
     mlab.axes(figure=fig, nb_labels=5, extent=(0, space, 0, space, 0, space))
