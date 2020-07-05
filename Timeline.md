@@ -25,7 +25,6 @@ We want to make use of StyleGAN to explore the feasibilities in 3D asset generat
 
 
 
-
 # Beginning
 Since StyleGAN requires all the input image must be square image and its length of side must be the power of 2 (1024, 512, 256, ...). At the beginning of our project, we just simply flatten the 3D space into 2D images. At that time, we just test whether StyleGAN could recognize this transformation so the input data is monochrome.
 
@@ -172,8 +171,6 @@ Suprisingly, the training time has reduced after using this approach and it is q
 # More results of slice approach with Hilbert's curve
 
 ## 3D texture
-![1231](./markdown_image/style-mixing_with_truncation.gif)
-
 As the styleGAN cannot recognized the 3D model with different textures added, such as wooden or rock texture. We guess maybe there is not enough hidden layers that are responsible for finer details in 512 x 512 level. Therefore, we change the texture into simple striped texture with different colors.
 
 ## chair
