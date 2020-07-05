@@ -127,6 +127,7 @@ Suprisingly, the training time has reduced after using this approach and it is q
 
 ## 3D texture
 <span style="color:red">add result</span>  
+![1231](./markdown_image/style-mixing_with_truncation.gif)
 
 ## table
 <span style="color:red">add result</span>  
@@ -135,3 +136,4 @@ Suprisingly, the training time has reduced after using this approach and it is q
 <span style="color:red">add result</span>  
 
 <span style="color:blue">add discription</span> 
+
