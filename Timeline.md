@@ -8,7 +8,7 @@ We want to make use of StyleGAN to explore the feasibilities in 3D asset generat
 ## Flatten approach
 | 2D images           | its 3D representation |
 |:-------------------:| :--------------------:|
-| ![flatten 2D sample](./markdown_image/flatten_sample.png)|  ![flatten 3D sample](./markdown_image/3D_example.png)|
+| <img src="./markdown_image/flatten_sample.png" alt="drawing" width="256" height="256"/>| <img src="./markdown_image/3D_example.png" alt="drawing" width="256" height="256"/>|
 
 
 ## Texture approach
