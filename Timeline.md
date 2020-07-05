@@ -25,7 +25,6 @@ We want to make use of StyleGAN to explore the feasibilities in 3D asset generat
 
 
 
-
 # Beginning
 Since StyleGAN requires all the input image must be square image and its length of side must be the power of 2 (1024, 512, 256, ...). At the beginning of our project, we just simply flatten the 3D space into 2D images. At that time, we just test whether StyleGAN could recognize this transformation so the input data is monochrome.
 
@@ -76,11 +75,11 @@ This time we would 512 * 512 image as our shape of input images becausae it help
 1. Flatten the 3D array (64, 64, 64, 3) -> (262144, 3)
 2. Reshape the array to be 2D image with size 512 * 512 (262144, 3) -> (512, 512, 3)
 
-## results (bookcase)
+## Results (bookcase)
 <span style="color:red">add result</span>  
 <span style="color:blue">add discription</span>
 
-## results (table)
+## Results (table)
 <span style="color:red">add result</span>  
 <span style="color:blue">add discription</span>  
 
@@ -88,7 +87,7 @@ On the other hand, we were developing texture approach meanwhile.
 # Texture approach
 In this approach, we choose texture as our input dataset. We choose Minecraft human texture as our input dataset since it is relatively low resolution and contains tons of resources on the internet thanks to the community.
 
-## results 
+## Results 
 <span style="color:red">add result</span>  
 <span style="color:blue">add discription</span> 
 
@@ -102,7 +101,7 @@ As we want to take the advantages of powerful recognizing 2D images features abi
 ## Asumption behind
 1. If those 2D images which converted from 3D models, they share more similiar area by slicing along one specific axis, then that axis would be more appropriate as our choice since this is good for the network to recognize our input dataset.
 
-## results 
+## Results 
 <span style="color:red">add result</span>  
 <span style="color:blue">add discription</span>  
 
@@ -144,9 +143,12 @@ Suprisingly, the training time has reduced after using this approach and it is q
 # More results of slice approach with Hilbert's curve
 
 ## 3D texture
-![1231](./markdown_image/style-mixing_with_truncation.gif)
-
 As the styleGAN cannot recognized the 3D model with different textures added, such as wooden or rock texture. We guess maybe there is not enough hidden layers that are responsible for finer details in 512 x 512 level. Therefore, we change the texture into simple striped texture with different colors.
+
+1. Randomly choose 2 colors from 125 different color, then form a striped pattern with size (64, 64, 3).
+2. Every slice of the same 3D model data share the same mapping pattern.
+3. On every slice, if there is any existed voxel, we assign its corresponding RGB value of the pixel with the same position as the voxel on the slice.
+![1231](./markdown_image/style-mixing_with_truncation.gif)
 
 ## table
 <span style="color:red">add result</span>  
