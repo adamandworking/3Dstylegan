@@ -1,6 +1,6 @@
-# A Quick Glace
+# A Quick Glance
 
-![workflow](./markdown_image/workflow.png)  
+![work flow of Slice approach](./markdown_image/cube_01.png)
 
 <span style="color:blue">Jo add discription</span>
 
@@ -103,8 +103,7 @@ Source: [DateGenetics](http://datagenetics.com/blog/march22013/)
 Then the relationship of the slice could be strengthened and this helps synthesis process.  
 
 4 x 4 :  
-![Hilbert's curve 8 x 8](./markdown_image/Hilbert's%20curve%208x8.png)
-![4x4convert](./markdown_image/4x4_convert.png)
+![4x4convert](./markdown_image/cube_02.png)
 
 At least in every 4 or 8 adjacent slice could be segmented as the same 8 x 8 or 4 x 4 grid respectively. We assume that it is good for the network, especially increasing the ability of style-mixing.
 
@@ -136,4 +135,3 @@ Suprisingly, the training time has reduced after using this approach and it is q
 <span style="color:red">add result</span>  
 
 <span style="color:blue">add discription</span> 
-
