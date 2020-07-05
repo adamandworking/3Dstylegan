@@ -14,15 +14,14 @@ We want to make use of StyleGAN to explore the feasibilities in 3D asset generat
 ## Texture approach
 | 2D images           | its 3D representation |
 |:-------------------:| :--------------------:|
-| ![minecraft 2D sample](./markdown_image/texture_2D_sample.png)| ![minecraft 3D sample](./markdown_image/texture_3D_sample.png)|
-
+|<img src="./markdown_image/texture_2D_sample.png" alt="drawing"/>|<img src="./markdown_image/texture_3D_sample.png" alt="drawing" height="256"/>|
 ## Slice approach
 |       Method          | 2D images           | its 3D representation |
 | :---------------------|:-------------------:| :--------------------:|
-| Normal                |![slice_normal_sample](./markdown_image/slice_normal_sample.png) | ![flatten 3D sample](./markdown_image/3D_example.png)|
-| Hilbert               |![slice_Hilbert_sample](./markdown_image/slice_Hilbert_sample.png) | ![flatten 3D sample](./markdown_image/3D_example.png)|
-| 3-axis                |![slice_3-axis_sample](./markdown_image/slice_3-axis_sample.png) |![flatten 3D sample](./markdown_image/3D_example.png) |
-| Hilbert_with_3-axis   |![slice_Hilbert_with_3-axis_sample](./markdown_image/slice_Hilbert_with_3-axis_sample.png) |![flatten 3D sample](./markdown_image/3D_example.png) |
+| Normal                |<img src="./markdown_image/slice_normal_sample.png" alt="drawing" height="256"/>|<img src="./markdown_image/3D_example.png" alt="drawing" height="256"/>|
+| Hilbert               |<img src="./markdown_image/slice_Hilbert_sample.png" alt="drawing" height="256"/>|<img src="./markdown_image/3D_example.png" alt="drawing" height="256"/>|
+| 3-axis                |<img src="./markdown_image/slice_3-axis_sample.png" alt="drawing" height="256"/>|<img src="./markdown_image/3D_example.png" alt="drawing" height="256"/>|
+| Hilbert_with_3-axis   |<img src="./markdown_image/slice_Hilbert_with_3-axis_sample.png" alt="drawing" height="256"/>|<img src="./markdown_image/3D_example.png" alt="drawing" height="256"/>|
 
 
 
