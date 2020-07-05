@@ -46,6 +46,6 @@ def single_image_converter(numpy_png, mode, color):
 
 
 if __name__ == '__main__':
-    # slice_convert_2D_to_3D()
+    slice_convert_2D_to_3D()
     # minecraft_convert_2D_to_3D()
     print('program end')
