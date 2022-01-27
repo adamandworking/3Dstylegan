@@ -182,7 +182,7 @@ As the styleGAN cannot recognized the 3D model with different textures added, su
 |<img src="./markdown_image/Hilbert_chair4.png" height="256"/>|<img src="./markdown_image/Hilbert_chair4_3D.png" height="256"/>|
 
 # pkl file download
-(OneDrive link)[https://mycuhk-my.sharepoint.com/:u:/g/personal/1155095136_link_cuhk_edu_hk/ERLYZY_BhIlEmG2NLEVsjPcBHuVw6d5RB24b7U2ubozWpw?e=oc4pEr]
+(Google Drive link)[https://drive.google.com/file/d/1yFbIObAgOrY5R6wW0YkMhCS6A8IC0lew/view?usp=sharing]
 
 # Example for How to use the program
 
