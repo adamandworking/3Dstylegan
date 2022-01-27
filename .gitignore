@@ -9,3 +9,4 @@ pkl_folder/
 voxel_lib/cache/*
 dnnlib/tflib/_cudacache/*
 
+output/
